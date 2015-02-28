@@ -7,16 +7,20 @@
   <script type='text/javascript' src='app.js'></script>
 </head>
 <body>
-  <h1>Hot or Cold App</h1>
+  <div class="main-container">
+    <h1>Hot or Cold App</h1>
 
-    <button id="new-game">new game</button>
-    <form>
-      <input type="number" name="quantity" min="1" max="100">
-      <input type="submit" value="Submit">
-    </form>
+      <button id="new-game">new game</button>
+      <form>
+        <input type="number" name="number" min="1" max="100" required>
+        <input type="submit" value="Submit">
+      </form>
 
-    <div id="display">
-      <p></p>
-    </div>
-
+      <div id="display">
+        <p></p>
+      </div>
+      <div id="guesses">
+        <h3></h3>
+      </div>
+  </div>
 </body>

@@ -25,6 +25,19 @@ $(document).ready(function () {
         }
       };
 
+      var checkDifference = function(num, guess) {
+        if (Math.abs(num - guess) > 3 ) {
+          $('.main-container').css("background-color", "blue");
+        }
+        else if (Math.abs(num - guess) > 2 ) {
+          $('.main-container').css("background-color", "red");
+        }
+        else {
+          $('.main-container').css("background-color", "green");
+        }
+      };
+      
+
       if (checkInput(userInput , guessList)) {
         $('p').text("you already guessed that");
       }
@@ -33,12 +46,15 @@ $(document).ready(function () {
           $('p').text("yay you got it");
           $('form').hide( 300 );
           $('#new-game').show( 300 );
+          $('h3').text("");
           guessList = [];
+
         }
         else {
+          checkDifference(secretNum, userInput);
           guessList.push(userInput);
           $('p').text("boo that's not right");
-          console.log(guessList)
+          $('h3').text(guessList);
         }
       }
     });
