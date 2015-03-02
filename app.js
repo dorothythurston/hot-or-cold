@@ -8,7 +8,7 @@ $(document).ready(function () {
     event.preventDefault();
     $('form').show( 300 );
     $('#new-game').hide( 300 );
-    $('p').text("guess a number between 1 and 5");
+    $('p').text("guess a number between 1 and 10");
 
     var secretNum = makeSecretNum();
 
@@ -26,17 +26,19 @@ $(document).ready(function () {
       };
 
       var checkDifference = function(num, guess) {
-        if (Math.abs(num - guess) > 3 ) {
+        var difference = Math.abs(num - guess);
+
+        if (difference >= 6 && difference <= 10) {
           $('.main-container').css("background-color", "blue");
         }
-        else if (Math.abs(num - guess) > 2 ) {
+        else if (difference > 2 && difference <= 5 ) {
           $('.main-container').css("background-color", "red");
         }
         else {
-          $('.main-container').css("background-color", "green");
+          $('.main-container').css("background-color", "orange");
         }
       };
-      
+
 
       if (checkInput(userInput , guessList)) {
         $('p').text("you already guessed that");
