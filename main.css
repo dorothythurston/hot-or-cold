@@ -16,3 +16,11 @@ form {
   border: 5px solid black;
   border-radius: 15px;
 }
+
+.warm {
+  color: red;
+}
+
+.cold {
+  color: blue;
+}
