@@ -9,7 +9,10 @@ form {
 }
 
 .main-container {
-  width: 300px;
+  width: 400px;
   margin-left: auto;
   margin-right: auto;
+  padding: 15px;
+  border: 5px solid black;
+  border-radius: 15px;
 }

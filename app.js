@@ -1,23 +1,18 @@
 $(document).ready(function () {
-  var makeSecretNum =  function () {
-    return Math.floor((Math.random() * 5) + 1);
-  }
-  var guessList = [];
-
   $('#new-game').click(function(event) {
     event.preventDefault();
     $('form').show( 300 );
     $('#new-game').hide( 300 );
-    $('p').text("guess a number between 1 and 10");
+    $('p').text("guess a number between 1 and 50");
 
-    var secretNum = makeSecretNum();
+    var guessList = [];
+    var secretNum = Math.floor((Math.random() * 50) + 1);
 
     $('form').submit(function(event){
       event.preventDefault();
-      var grabUserInput = $('input').val();
-      var userInput = parseInt(grabUserInput);
+      var newGuess = parseInt($('input').val());
 
-      var checkInput = function(num,array) {
+      var inputGuessed = function(num,array) {
         for (var i = 0; i < array.length; i++) {
           if (num === array[i]) {
             return true
@@ -25,40 +20,67 @@ $(document).ready(function () {
         }
       };
 
-      var checkDifference = function(num, guess) {
-        var difference = Math.abs(num - guess);
+      var colorFeedback = function(secretNum, newGuess) {
+        var difference = Math.abs(secretNum - newGuess);
 
-        if (difference >= 6 && difference <= 10) {
+        if (difference <= 50 && difference > 40) {
+          $('.main-container').css("background-color", "light-blue");
+        }
+        else if (difference <= 40  && difference > 30 ) {
           $('.main-container').css("background-color", "blue");
         }
-        else if (difference > 2 && difference <= 5 ) {
+        else if (difference <= 30  && difference > 20 ) {
+          $('.main-container').css("background-color", "navy");
+        }
+        else if (difference <= 20  && difference > 10 ) {
+          $('.main-container').css("background-color", "purple");
+        }
+        else if (difference <= 10  && difference > 5 ) {
+          $('.main-container').css("background-color", "magenta");
+        }
+        else if (difference <= 5  && difference > 0 ) {
           $('.main-container').css("background-color", "red");
         }
         else {
-          $('.main-container').css("background-color", "orange");
+          $('.main-container').css("background-color", "green");
         }
       };
 
 
-      if (checkInput(userInput , guessList)) {
-        $('p').text("you already guessed that");
-      }
-      else {
-        if (userInput === secretNum) {
-          $('p').text("yay you got it");
-          $('form').hide( 300 );
-          $('#new-game').show( 300 );
-          $('h3').text("");
-          guessList = [];
+      var compareCloseness = function(secretNum, newGuess) {
+        var lastGuess = guessList[(guessList.length-1)];
 
+        if (lastGuess) {
+          if (inputGuessed (newGuess , guessList)) {
+            $('ul').prepend("<li>you already guessed " + newGuess + "</li>");
+          }
+          else if (Math.abs(secretNum - newGuess) < Math.abs(secretNum - lastGuess)) {
+              $('ul').prepend("<li>" + newGuess + " is warmer than " + lastGuess + "</li>");
+          }
+          else {
+            $('ul').prepend("<li>" + newGuess + " is colder than " + lastGuess + "</li>");
+          }
+        }
+      };
+
+      var displayResults = function (newGuess, guessList, secretNum) {
+        if (newGuess === secretNum) {
+            $('p').text("You got it!");
+            $('.main-container').css("background-color", "green");
+            $('form').hide( 300 );
+            $('#new-game').show( 300 );
+            $('h3').text("");
+            $('ul').text("");
+            $('#user-input').val("");
         }
         else {
-          checkDifference(secretNum, userInput);
-          guessList.push(userInput);
-          $('p').text("boo that's not right");
-          $('h3').text(guessList);
+            colorFeedback(secretNum, newGuess);
+            compareCloseness(secretNum, newGuess);
+            guessList.push(newGuess);
         }
-      }
+      };
+
+      displayResults(newGuess, guessList, secretNum);
     });
   });
 });
