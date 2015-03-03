@@ -5,11 +5,12 @@ $(document).ready(function () {
     $('#new-game').hide( 300 );
     $('p').text("guess a number between 1 and 100");
 
-    var guessList = [];
     var maxGuess = 100
     var secretNum = Math.floor((Math.random() * maxGuess) + 1);
+    var guessList = [];
 
-    $('form').submit(function(event){
+
+    $('form').unbind('submit').submit(function(event){
       event.preventDefault();
 
       var newGuess = parseInt($('input').val());
@@ -41,6 +42,12 @@ $(document).ready(function () {
         }
       };
 
+      var clearGuessList = function (){
+        while(guessList.length > 0) {
+          guessList.pop();
+        }
+      }
+
       var displayResults = function () {
         if (newGuess === secretNum) {
             $('p').text("You got it!");
@@ -49,10 +56,10 @@ $(document).ready(function () {
             $('h3').text("");
             $('ul').text("");
             $('#user-input').val("");
+            console.log(guessList);
+            console.log(secretNum);
 
-            while(guessList.length > 0) {
-              guessList.pop();
-            }
+            clearGuessList();
         }
         else {
             compareCloseness(secretNum, newGuess);
