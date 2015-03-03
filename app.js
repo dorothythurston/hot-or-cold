@@ -27,11 +27,11 @@ $(document).ready(function () {
         var lastGuess = guessList[(guessList.length-1)];
 
         if (guessList.length < 1) {
-          $('ul').prepend("<li>nope. it's not " + newGuess + "</li>");
+          $('ul').prepend("<li> nope. it's not " + newGuess + "</li>");
         }
         else if (lastGuess) {
           if (inputGuessed (newGuess , guessList)) {
-            $('ul').prepend("<li>you already guessed " + newGuess + "</li>");
+            $('ul').prepend("<li> you already guessed " + newGuess + "</li>");
           }
           else if (Math.abs(secretNum - newGuess) < Math.abs(secretNum - lastGuess)) {
               $('ul').prepend("<li>" + newGuess + " is <span class='warm'>warmer</span> than " + lastGuess + "</li>");
@@ -56,8 +56,6 @@ $(document).ready(function () {
             $('h3').text("");
             $('ul').text("");
             $('#user-input').val("");
-            console.log(guessList);
-            console.log(secretNum);
 
             clearGuessList();
         }
